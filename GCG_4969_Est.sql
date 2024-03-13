@@ -1,0 +1,3 @@
+CREATE TABLE "GCG_4969_Est"(
+ "WO" CHAR(10),
+ "Est" NUMERIC(12,4));
