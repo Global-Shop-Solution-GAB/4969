@@ -1,0 +1,517 @@
+Program.Sub.ScreenSU.Start
+Gui.Form..Create
+Gui.Form..Caption("OperationPerformance")
+Gui.Form..Size(25830,14445)
+Gui.Form..MinX(0)
+Gui.Form..MinY(0)
+Gui.Form..Position(0,0)
+Gui.Form..BackColor(-2147483633)
+Gui.Form..MousePointer(0)
+Gui.Form..Event(UnLoad,Form_UnLoad)
+Gui.Form.gsWO.Create(GsGridControl)
+Gui.Form.gsWO.Size(25395,12660)
+Gui.Form.gsWO.Position(90,840)
+Gui.Form.gsWO.Event(RowCellClick,gsWO_RowCellClick)
+Gui.Form.dtpStart.Create(DatePicker)
+Gui.Form.dtpStart.Size(1935,285)
+Gui.Form.dtpStart.Position(90,375)
+Gui.Form.dtpEnd.Create(DatePicker)
+Gui.Form.dtpEnd.Size(1935,285)
+Gui.Form.dtpEnd.Position(2160,375)
+Gui.Form.lbl1.Create(Label,"Start",True,690,255,0,90,150,True,0,"Arial",8,-2147483633,0)
+Gui.Form.lbl2.Create(Label,"End",True,690,255,0,2160,150,True,0,"Arial",8,-2147483633,0)
+Gui.Form.frame1.Create(Frame)
+Gui.Form.frame1.Size(2715,465)
+Gui.Form.frame1.Position(4305,255)
+Gui.Form.optAll.Create(Option)
+Gui.Form.optAll.Size(645,255)
+Gui.Form.optAll.Position(135,150)
+Gui.Form.optAll.Parent("frame1")
+Gui.Form.optAll.Caption("All")
+Gui.Form.optOpen.Create(Option)
+Gui.Form.optOpen.Size(810,255)
+Gui.Form.optOpen.Position(900,150)
+Gui.Form.optOpen.Parent("frame1")
+Gui.Form.optOpen.Caption("Open")
+Gui.Form.optClosed.Create(Option)
+Gui.Form.optClosed.Size(885,255)
+Gui.Form.optClosed.Position(1755,150)
+Gui.Form.optClosed.Parent("frame1")
+Gui.Form.optClosed.Caption("Closed")
+Gui.Form.cmdLoad.Create(Button)
+Gui.Form.cmdLoad.Size(855,375)
+Gui.Form.cmdLoad.Position(7200,330)
+Gui.Form.cmdLoad.Caption("Load")
+Gui.Form.cmdLoad.Event(Click,cmdLoad_Click)
+Gui.Form.cmdExport.Create(Button)
+Gui.Form.cmdExport.Size(855,375)
+Gui.Form.cmdExport.Position(75,13605)
+Gui.Form.cmdExport.Caption("Export")
+Gui.Form.cmdExport.Event(Click,cmdExport_Click)
+Gui.Form.lblRows.Create(Label,"Rows",True,600,255,0,23880,630,True,0,"Arial",8,-2147483633,0)
+Gui.Form.txtRows.Create(TextBox,"",True,915,195,0,24540,600,False,1,"Arial",8,-2147483645,0)
+Gui.F_Note..Create
+Gui.F_Note..Caption("Note")
+Gui.F_Note..Size(12660,8550)
+Gui.F_Note..MinX(0)
+Gui.F_Note..MinY(0)
+Gui.F_Note..Position(0,0)
+Gui.F_Note..BackColor(-2147483633)
+Gui.F_Note..MousePointer(0)
+Gui.F_Note..Event(UnLoad,F_Note_UnLoad)
+Gui.F_Note.cmdExitNote.Create(Button)
+Gui.F_Note.cmdExitNote.Size(855,375)
+Gui.F_Note.cmdExitNote.Position(1245,7575)
+Gui.F_Note.cmdExitNote.TabStop(True)
+Gui.F_Note.cmdExitNote.TabIndex(2)
+Gui.F_Note.cmdExitNote.Caption("Exit")
+Gui.F_Note.cmdExitNote.Event(Click,cmdExitNote_Click)
+Gui.F_Note.txtWONote.Create(TextBoxR)
+Gui.F_Note.txtWONote.Size(12090,6885)
+Gui.F_Note.txtWONote.Position(210,645)
+Gui.F_Note.txtWONote.TabStop(True)
+Gui.F_Note.txtWONote.TabIndex(1)
+Gui.F_Note.lbl1.Create(Label,"Work Order",True,1020,255,0,240,390,True,0,"Arial",8,-2147483633,0)
+Gui.F_Note.lblWONote.Create(Label,"",True,1335,255,0,1245,375,True,0,"Arial",8,-2147483621,0)
+Gui.F_Note.cmdSave.Create(Button)
+Gui.F_Note.cmdSave.Size(855,375)
+Gui.F_Note.cmdSave.Position(225,7575)
+Gui.F_Note.cmdSave.Caption("Save")
+Gui.F_Note.cmdSave.Event(Click,cmdSave_Click)
+Gui.F_Note.txtOriginalNote.Create(TextBoxR)
+Gui.F_Note.txtOriginalNote.Visible(False)
+Gui.F_Note.txtOriginalNote.Size(1455,735)
+Gui.F_Note.txtOriginalNote.Position(2625,7575)
+Gui.F_Note.txtRowIndex.Create(TextBox,"",False,1215,300,0,4185,7605,True,0,"Arial",8,-2147483643,1)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'BN, Apr 18, 2018
+'Project description is at the bottom
+f.Intrinsic.Control.Try
+v.Local.sError.Declare
+
+gui.Form.optAll.Value(1)
+f.Data.DataTable.Create("WO",True)
+gui.Form.gsWO.AddGridviewFromDatatable("GVWO","WO")
+gui.Form.gsWO.MainView("GVWO")
+f.Intrinsic.Control.CallSub("Set_Anchor")
+gui.Form..Show
+gui.Form..Size(27500,14445)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}GAB Version: {5}}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.Set_Anchor.Start
+f.Intrinsic.Control.Try
+v.Local.sError.Declare
+'0 - None     1 - Top     2 - Bottom 	  4 - Left     	8 - Right
+GUI.Form.lbl1.Anchor(5)
+GUI.Form.lbl2.Anchor(5)
+GUI.Form.dtpStart.Anchor(5)
+GUI.Form.dtpEnd.Anchor(5)
+GUI.Form.frame1.Anchor(5)
+GUI.Form.optAll.Anchor(5)
+GUI.Form.optOpen.Anchor(5)
+GUI.Form.optClosed.Anchor(5)
+GUI.Form.cmdLoad.Anchor(5)
+GUI.Form.lblRows.Anchor(9)
+gui.Form.txtRows.Anchor(9)
+gui.Form.gsWO.Anchor(15)
+gui.Form.cmdExport.Anchor(6)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}GAB Version: {5}}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Set_Anchor.End
+
+Program.Sub.Form_UnLoad.Start
+f.Intrinsic.Control.Try
+v.Local.sError.Declare
+
+f.Intrinsic.Control.End
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}GAB Version: {5}}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Form_UnLoad.End
+
+Program.Sub.cmdLoad_Click.Start
+f.Intrinsic.Control.Try
+v.Local..BulkDeclareString(sError,sSQL,sRet,sWhere,sBlankEstHrsJobList,sStart,sEnd,sPartNoSO,sFilter)
+v.Local.i1.Declare
+
+f.Intrinsic.String.Format(v.Screen.Form!dtpStart.Value,"YYYY-MM-DD",v.Local.sStart)
+f.Intrinsic.String.Format(v.Screen.Form!dtpEnd.Value,"YYYY-MM-DD",v.Local.sEnd)
+gui.Form.gsWO.ClearRows("GVWO")
+
+'Build SQL for Where clause
+f.Intrinsic.Control.If(v.Screen.Form!optOpen.Value,=,True)
+	f.Intrinsic.String.Build("Where Date_Due between '{0}' and '{1}' and DATE_CLOSED = '1900-1-1'",v.Local.sStart,v.Local.sEnd,v.Local.sWhere)
+f.Intrinsic.Control.ElseIf(v.Screen.Form!optClosed.Value,=,True)
+	f.Intrinsic.String.Build("Where Date_Due between '{0}' and '{1}' and DATE_CLOSED <> '1900-1-1'",v.Local.sStart,v.Local.sEnd,v.Local.sWhere)
+f.Intrinsic.Control.Else
+	f.Intrinsic.String.Build("Where Date_Due between '{0}' and '{1}'",v.Local.sStart,v.Local.sEnd,v.Local.sWhere)
+f.Intrinsic.Control.EndIf
+
+f.ODBC.Connection!conx.OpenCompanyConnection(600)
+
+'Pull WO
+f.Intrinsic.String.Build("SELECT Date_Due as WO_Due_Date,Scheduled_Due_Date,jh.Date_closed,jh.QTY_COMPLETED,jh.Customer,CASE WHEN b.Name_Customer IS NOT NULL THEN b.Name_Customer ELSE c.Name_Customer END AS Name_Customer,RTrim(jh.Description) As Description,COALESCE(jh.PART,'') AS Part,jh.Location,Qty_Order,VOL.Discount_Price as UnitPrice,jh.Num_hours AS Act_Hrs,Customer_PO,jh.Job,jh.Suffix,jh.Job+ '-' + jh.Suffix AS JS,Case When DATE_CLOSED = '1900-1-1' Then 'Open' When DATE_CLOSED <> '1900-1-1' Then 'Closed' End as Open_Close,OWO.Order_No,OWO.Order_Line,OWO.ORDER_NO + '-' + OWO.ORDER_LINE AS SO FROM V_JOB_HEADER jh LEFT JOIN V_CUSTOMER_MASTER c ON jh.CUSTOMER=c.CUSTOMER LEFT JOIN V_ORDER_TO_WO OWO ON jh.JOB = OWO.JOB AND jh.SUFFIX = OWO.SUFFIX LEFT JOIN V_ORDER_LINES VOL ON OWO.ORDER_NO = VOL.ORDER_NO AND OWO.ORDER_LINE = VOL.RECORD_NO LEFT JOIN V_ORDER_BILL_TO b ON VOL.ORDER_NO = b.ORDER_NO {0} ORDER BY DATE_DUE;",v.Local.sWhere,v.Local.sSQL)
+
+'Load WO Data Table
+f.Intrinsic.Control.If(v.DataTable.WO.Exists)
+	f.Data.DataTable.Close("WO")
+f.Intrinsic.Control.EndIf
+f.Data.DataTable.CreateFromSQL("WO","conx",v.Local.sSQL,True)
+f.Data.DataTable.AddColumn("WO","EST_HRS","Float")
+f.Data.DataTable.AddColumn("WO","EstHoursSource","String")
+f.Data.DataTable.AddColumn("WO","Note","String")
+
+'Populate Notes from Gab_4169_WO_Notes
+f.Data.Dictionary.CreateFromSQL("NoteDict","conx","Select Job + '-' + Suffix, Notes from Gab_4169_WO_Notes")
+f.Data.Dictionary.SetDefaultReturn("NoteDict","")
+f.Data.DataTable.FillFromDictionary("WO","NoteDict","JS","Note")
+f.Data.Dictionary.Close("NoteDict")
+
+'View of rows that do not have Unit Price because those SO have been moved to history. For those rows, get the Top 1 Unit Price from V_Order_Hist
+f.Intrinsic.UI.InvokeWaitDialog("Processing Unit Price for History Sales Orders...")
+f.Intrinsic.Control.If(v.DataView.WO!HistSODV.Exists)
+	f.Data.DataView.Close("WO","HistSODV")
+f.Intrinsic.Control.EndIf
+f.Data.DataView.Create("WO","HistSODV",22,"UnitPrice is Null and Order_No <> ''","")
+f.Intrinsic.Control.If(v.DataTable.HistSO.Exists)
+	f.Data.DataTable.Close("HistSO")
+f.Intrinsic.Control.EndIf
+f.Data.DataView.ToDataTableDistinct("WO","HistSODV","HistSO","Order_No*!*Order_Line",True)
+f.Intrinsic.Control.For(v.Local.i1,0,v.DataTable.HistSO.RowCount--,1)
+	f.Intrinsic.String.Build("UnitPrice is Null and Order_No = '{0}' and Order_Line = '{1}'",v.DataTable.HistSO(v.Local.i1).Order_No!FieldValString,v.DataTable.HistSO(v.Local.i1).Order_Line!FieldValString,v.Local.sFilter)
+	f.Data.DataView.SetFilter("WO","HistSODV",v.Local.sFilter)
+	f.Intrinsic.String.Build("Select Top 1 Price_Discount  from V_Order_Hist_Line where Order_No = '{0}' and Order_Line = '{1}' order by DATE_SHIPPED desc",v.DataTable.HistSO(v.Local.i1).Order_No!FieldValString,v.DataTable.HistSO(v.Local.i1).Order_Line!FieldValString,v.Local.sSQL)
+	f.ODBC.Connection!conx.ExecuteAndReturn(v.Local.sSQL,v.Local.sRet)	
+	f.Intrinsic.Control.if(v.Local.sRet,<>,"")
+		f.Data.DataView.SetValue("WO","HistSODV",-1,"UnitPrice",v.Local.sRet)		
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.i1)
+
+'View of rows that do not have Sales Order populated (no link from WO to SO for these). For those rows, let the SO number blank, and get the Top 1 Unit Price from V_Order_Hist
+f.Intrinsic.UI.ChangeWaitStatus("Processing Unit Price for blank Sales Orders...")
+f.Intrinsic.Control.If(v.DataView.WO!NoSODV.Exists)
+	f.Data.DataView.Close("WO","NoSODV")
+f.Intrinsic.Control.EndIf
+f.Data.DataView.Create("WO","NoSODV",22,"Order_No is Null","")
+f.Intrinsic.Control.If(v.DataTable.NoSOPart.Exists)
+	f.Data.DataTable.Close("NoSOPart")
+f.Intrinsic.Control.EndIf
+f.Data.DataView.ToDataTableDistinct("WO","NoSODV","NoSOPart","Part*!*Location",True)
+f.Intrinsic.Control.For(v.Local.i1,0,v.DataTable.NoSOPart.RowCount--,1)
+	f.Intrinsic.String.Build("Order_No is Null and Part = '{0}' and Location = '{1}'",v.DataTable.NoSOPart(v.Local.i1).Part!FieldValString,v.DataTable.NoSOPart(v.Local.i1).Location!FieldValString,v.Local.sFilter)
+	f.Data.DataView.SetFilter("WO","NoSODV",v.Local.sFilter)
+
+	f.Intrinsic.String.Build("Select Top 1 Discount_Price  from V_Order_Lines where Part = '{0}' and Location = '{1}' Order by Date_Order Desc",v.DataTable.NoSOPart(v.Local.i1).Part!FieldValString,v.DataTable.NoSOPart(v.Local.i1).Location!FieldValString,v.Local.sSQL)
+	f.ODBC.Connection!conx.ExecuteAndReturn(v.Local.sSQL,v.Local.sRet)	
+	f.Intrinsic.Control.if(v.Local.sRet,<>,"")
+		f.Data.DataView.SetValue("WO","NoSODV",-1,"UnitPrice",v.Local.sRet)		
+	f.Intrinsic.Control.else
+		f.Intrinsic.String.Build("Select Top 1 Price_Discount from V_ORDER_HIST_LINE where Part = '{0}' and Location = '{1}' Order by Date_Order Desc",v.DataTable.NoSOPart(v.Local.i1).Part!FieldValString,v.DataTable.NoSOPart(v.Local.i1).Location!FieldValString,v.Local.sSQL)
+		f.ODBC.Connection!conx.ExecuteAndReturn(v.Local.sSQL,v.Local.sRet)
+		f.Intrinsic.Control.if(v.Local.sRet,<>,"")
+			f.Data.DataView.SetValue("WO","NoSODV",-1,"UnitPrice",v.Local.sRet)	
+		f.Intrinsic.Control.EndIf				
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.i1)
+f.Intrinsic.UI.CloseWaitDialog
+
+f.ODBC.Connection!conx.Execute("Delete from GCG_4969_Est")
+
+'Get Estimate Hours from APS
+f.Data.DataTable.CreateFromSQL("ApsEst","conx","select JOB + '-' + SFX as WO,CONVERT(SUM(HOURSORIG+INITSU),SQL_NUMERIC) AS EST from Apsv3_Jblines WHERE SEQTYPE = '1' group by WO",True)
+f.Data.DataTable.SaveToDB("ApsEst","conx","GCG_4969_Est","",128)
+f.Data.DataTable.Close("ApsEst")
+
+'Mark Source from APS
+f.Data.Dictionary.CreateFromSQL("ApsSourceDict","conx","select distinct JOB + '-' + SFX as JS,'APS' as Source from Apsv3_Jblines WHERE SEQTYPE = '1'")
+f.Data.Dictionary.SetDefaultReturn("ApsSourceDict","")
+f.Data.DataTable.FillFromDictionary("WO","ApsSourceDict","JS","EstHoursSource")
+f.Data.Dictionary.Close("ApsSourceDict")
+
+'Get Estimate Hours from Job_Operations
+f.Intrinsic.Control.If(v.DataView.WO!JobOpsDV.Exists)
+	f.Data.DataView.Close("WO","JobOpsDV")
+f.Intrinsic.Control.EndIf
+f.Data.DataView.Create("WO","JobOpsDV",22,"EstHoursSource = ''","")
+f.Data.DataView.ToString("WO","JobOpsDV","JS","","','",v.Local.sBlankEstHrsJobList)
+f.Intrinsic.String.Build("select Job + '-' + Suffix as WO,Sum(Hours_Estimated) as Est from V_Job_Operations where WO in ('{0}') and LMO = 'L' Group By WO",v.Local.sBlankEstHrsJobList,v.Local.sSQL)
+f.Data.DataTable.CreateFromSQL("JobOpEst","conx",v.Local.sSQL,True)
+f.Data.DataTable.SaveToDB("JobOpEst","conx","GCG_4969_Est","WO",256)
+f.Data.DataTable.Close("JobOpEst")
+
+'Fill Estimate Hours to WO data table
+f.Data.Dictionary.CreateFromSQL("EstDict","conx","Select WO, Est from GCG_4969_Est")
+f.Data.Dictionary.SetDefaultReturn("EstDict",0)
+f.Data.DataTable.FillFromDictionary("WO","EstDict","JS","EST_HRS")
+f.Data.Dictionary.Close("EstDict")
+
+'Add Calculated columns
+f.Data.DataTable.AddExpressionColumn("WO","ExtendedAmount","float","UnitPrice * Qty_Order")
+f.Data.DataTable.AddExpressionColumn("WO","Rem_Hours","float","IIF(Est_Hrs <> 0,Est_Hrs - Act_Hrs,Null)")
+f.Data.DataTable.AddExpressionColumn("WO","NormalMinPC","float","IIF(Qty_Order <> 0,Est_Hrs * 60 / Qty_Order,Null)")
+f.Data.DataTable.AddExpressionColumn("WO","AvgDLH","float","IIF(Est_Hrs <> 0,ExtendedAmount / Est_Hrs,Null)")
+f.Data.DataTable.AddExpressionColumn("WO","ActualMinPC","float","IIF(Qty_Completed <> 0 And DATE_CLOSED <> '01/01/1900',Act_Hrs * 60 / Qty_Completed,Null)")
+
+'Load Grid
+gui.Form.gsWO.AddGridviewFromDatatable("GVWO","WO")
+f.Intrinsic.Control.CallSub("Format_GVWO")
+gui.Form.gsWO.MainView("GVWO")
+gui.Form.txtRows.Text(v.DataTable.WO.RowCount)
+
+f.ODBC.Connection!conx.Close
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}GAB Version: {5}}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdLoad_Click.End
+
+Program.Sub.cmdExport_Click.Start
+F.Intrinsic.Control.Try
+v.Local..BulkDeclareString(sError,sFileExport,sMsg,sDate,sTime,sDir)
+v.Local..BulkDeclareBoolean(bExcel,bExists)
+
+f.Intrinsic.String.Build("{0}\Custom\OperationPerformance",v.Caller.BusintDir,v.Local.sDir)
+f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+f.Intrinsic.Control.If(v.Local.bExists.Not)
+	f.Intrinsic.File.CreateDir(v.Local.sDir)
+f.Intrinsic.Control.EndIf
+
+'Format date time to create file name with extension date time stamp
+f.Intrinsic.String.Format(v.Ambient.Date,"MMDDYYYY",v.Local.sDate)
+f.Intrinsic.String.Format(v.Ambient.Now,"HhNnSs",v.Local.sTime)
+
+F.Automation.MSExcel.CheckPresence(V.Local.bExcel)
+F.Intrinsic.Control.If(V.Local.bExcel)
+	F.Intrinsic.String.Build("{0}\{1}_{2}.xlsx",v.Local.sDir,v.Local.sDate,v.Local.sTime,V.Local.sFileExport)
+	gui.Form.gsWO.Export(V.Local.sFileExport,"xlsx")
+	F.Intrinsic.Task.ShellExec(0,"",V.Local.sFileExport,"","",1)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("{0}\{1}_{2}.csv",v.Local.sDir,v.Local.sDate,v.Local.sTime,V.Local.sFileExport)
+	Gui.Form.gsWO.Export(V.Local.sFileExport,"csv")
+	F.Intrinsic.Task.ShellExec(0,"",V.Local.sFileExport,"","",1)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+F.Intrinsic.UI.Msgbox(V.Local.sError)
+F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdExport_Click.End
+
+Program.Sub.Format_GVWO.Start
+f.Intrinsic.Control.Try
+v.Local.sError.Declare
+
+Gui.Form.gsWO.SuspendLayout()
+Gui.Form.gsWO.SetGridViewProperty("GVWO","AllowSort",True)
+Gui.Form.gsWO.SetGridViewProperty("GVWO","AllowFilter",True)
+Gui.Form.gsWO.SetGridViewProperty("GVWO","OptionsFindAlwaysVisible",True)
+Gui.Form.gsWO.SetGridViewProperty("GVWO","EnableAppearanceOddRow",True)
+Gui.Form.gsWO.SetGridViewProperty("GVWO","OptionsViewShowAutoFilterRow",True)
+
+'Visible Index
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","WO_Due_Date,Scheduled_Due_Date,Name_Customer,Description,SO,JS,Part,Qty_Order,NormalMinPC,UnitPrice,ExtendedAmount,Open_Close,Est_Hrs,AvgDLH,Act_Hrs,Rem_Hours,ActualMinPC,Customer_PO,Note","sProperty","VisibleIndex")
+'InVisible
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Customer,Date_Closed,Qty_Completed,Location,Job,Suffix,Order_No,Order_Line,EstHoursSource","sProperty","Invisible")
+'Width
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Open_Close","sProperty","Width","sWidth","45")
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Qty_Order,UnitPrice,ExtendedAmount,Est_Hrs,AvgDLH,Act_Hrs,Rem_Hours,ActualMinPC,Customer_PO,JS","sProperty","Width","sWidth","75")
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","SO","sProperty","Width","sWidth","80")
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","WO_Due_Date,NormalMinPC","sProperty","Width","sWidth","90")
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Scheduled_Due_Date","sProperty","Width","sWidth","100")
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Part,Customer_PO,Note","sProperty","Width","sWidth","140")
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Name_Customer,Description","sProperty","Width","sWidth","170")
+'Caption
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","WO_Due_Date@!@WO Due Date,Scheduled_Due_Date@!@Sched Due Date,Name_Customer@!@Customer Name,Qty_Order@!@Order Qty,Customer_PO@!@Customer PO,JS@!@Work Order,SO@!@Sales Order,NormalMinPC@!@Normal Min/PC,UnitPrice@!@Unit Price,ExtendedAmount@!@Extension,Open_Close@!@Status,EST_HRS@!@Est Hrs,AvgDLH@!@Avg/DLH,Act_Hrs@!@Act Hrs,Rem_Hours@!@Rem Hrs,ActualMinPC@!@Act Min/PC","sProperty","Caption")
+'HeaderFontBold
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","WO_Due_Date,Scheduled_Due_Date,Name_Customer,Description,Part,Qty_Order,NormalMinPC,UnitPrice,ExtendedAmount,Open_Close,Est_Hrs,AvgDLH,Act_Hrs,Rem_Hours,ActualMinPC,Customer_PO,JS,SO,Note","sProperty","HeaderFontBold")
+'HeaderAlignment_Center
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","WO_Due_Date,Scheduled_Due_Date,Qty_Order,NormalMinPC,UnitPrice,ExtendedAmount,Est_Hrs,AvgDLH,Act_Hrs,Rem_Hours,ActualMinPC","sProperty","HeaderAllign_Center")
+'HeaderAlignment_Far
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Qty_Order,NormalMinPC,UnitPrice,ExtendedAmount,Est_Hrs,AvgDLH,Act_Hrs,Rem_Hours,ActualMinPC","sProperty","HeaderAllign_Far")
+'CellHAlignment_Center
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","WO_Due_Date,Scheduled_Due_Date","sProperty","CellHAlignment_Center")
+'Decimal_2
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Qty_Order,NormalMinPC,UnitPrice,ExtendedAmount,Est_Hrs,AvgDLH,Act_Hrs,Rem_Hours,ActualMinPC","sProperty","Decimal_2")
+'Display
+Gui.Form.gsWO.SetColumnProperty("GVWO","WO_Due_Date","DisplayCustomDatetime","d")
+Gui.Form.gsWO.SetColumnProperty("GVWO","Scheduled_Due_Date","DisplayCustomDatetime","d")
+Gui.Form.gsWO.SetColumnProperty("GVWO","Date_Closed","DisplayCustomDatetime","d")
+'Link
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Part,SO,JS,Note","sProperty","For_RowCellClick")
+f.Intrinsic.Control.CallSub(FormatBulk,"GS","gsWO","GV","GVWO","sInputColumns","Part,SO,JS","sProperty","Link")
+
+gui.Form.gsWO.ResumeLayout()
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}GAB Version: {5}}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.Format_GVWO.End
+
+Program.Sub.FormatBulk.Start
+f.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError,sColumns,sHold)
+v.Local..BulkDeclareLong(iCnt)
+
+f.Intrinsic.String.Split(v.Args.sInputColumns,",",v.Local.sColumns)
+f.Intrinsic.Control.For(v.Local.iCnt,0,v.Local.sColumns.UBound,1)
+	F.Intrinsic.Control.SelectCase(v.Args.sProperty)
+		F.Intrinsic.Control.Case("Width")
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"MinWidth",v.Args.sWidth)
+		F.Intrinsic.Control.Case("Invisible")
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"Visible",False)
+		F.Intrinsic.Control.Case("VisibleIndex")
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"VisibleIndex",v.Local.iCnt)
+		F.Intrinsic.Control.Case("Caption")
+			f.Intrinsic.String.Split(v.Local.sColumns(v.Local.iCnt),"@!@",v.Local.sHold)
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sHold(0),"Caption",v.Local.sHold(1))
+		F.Intrinsic.Control.Case("For_RowCellClick")
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"AllowEdit",False)
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"ReadOnly","True")
+		f.Intrinsic.Control.Case("Link")
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"CellForeColor","Blue")
+		F.Intrinsic.Control.Case("HeaderAllign_Far")
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"HeaderHAlignment","Far")
+		F.Intrinsic.Control.Case("HeaderAllign_Center")
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"HeaderHAlignment","Center")
+		F.Intrinsic.Control.Case("HeaderFontBold")	
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"HeaderFontBold",True)
+		F.Intrinsic.Control.Case("CellHAlignment_Center")	
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"CellHAlignment",Center)
+		F.Intrinsic.Control.Case("Decimal_2")	
+			gui.Form.[v.Args.GS].SetColumnProperty(v.Args.GV,v.Local.sColumns(v.Local.iCnt),"DisplayCustomNumeric","#,###,###,##0.00")
+		F.Intrinsic.Control.EndSelect		
+f.Intrinsic.Control.Next(v.Local.iCnt)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}GAB Version: {5}}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.FormatBulk.End
+
+Program.Sub.gsWO_RowCellClick.Start
+F.Intrinsic.Control.Try
+v.Local..BulkDeclareString(sError,sHold)
+
+F.Intrinsic.Control.SelectCase(v.Args.Column)
+	F.Intrinsic.Control.Case("Part")
+		'Open Supply and Demand screen
+		f.Intrinsic.String.Build("{0}!*!{1}",v.DataTable.WO(v.Args.RowIndex).Part!FieldValString,v.DataTable.WO(v.Args.RowIndex).Location!FieldValString,v.Local.sHold)
+		F.Global.General.CallWrapperASync(300010,v.Local.sHold)
+	F.Intrinsic.Control.Case("JS")
+		'Open Work Order View screen
+		f.Intrinsic.String.Build("7!*!{0}!*!{1}!*!A",v.DataTable.WO(v.Args.RowIndex).Job!FieldValString,v.DataTable.WO(v.Args.RowIndex).Suffix!FieldValString,v.Local.sHold)
+		F.Global.General.CallWrapperASync(450000,v.Local.sHold)		
+	F.Intrinsic.Control.Case("SO")
+		'Open Sales Order view screen
+		f.Intrinsic.Control.If(v.DataTable.WO(v.Args.RowIndex).Order_No!FieldValTrim,<>,"")
+			f.Intrinsic.String.Build("{0}!*!V!*!{1}",v.DataTable.WO(v.Args.RowIndex).Order_No!FieldValString,v.DataTable.WO(v.Args.RowIndex).Customer!FieldValString,v.Local.sHold)
+			F.Global.General.CallWrapperASync(200000,v.Local.sHold)	
+		f.Intrinsic.Control.Else
+			f.Intrinsic.UI.Msgbox("Blank Sales Order")
+		f.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Case("Note")
+		'Open the Input box for viewing and editing the Note
+		gui.F_Note.txtOriginalNote.Text(v.DataTable.WO(v.Args.RowIndex).Note!FieldValString)
+		gui.F_Note.txtWONote.Text(v.DataTable.WO(v.Args.RowIndex).Note!FieldValString)
+		gui.F_Note.txtRowIndex.Text(v.Args.RowIndex)
+		gui.F_Note.lblWONote.Caption(v.DataTable.WO(v.Args.RowIndex).JS!FieldValString)
+		gui.F_Note..Show	
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.gsWO_RowCellClick.End
+
+Program.Sub.cmdExitNote_Click.Start
+f.Intrinsic.Control.CallSub("AskSave")
+Program.Sub.cmdExitNote_Click.End
+
+Program.Sub.F_Note_UnLoad.Start
+f.Intrinsic.Control.CallSub("AskSave")
+Program.Sub.F_Note_UnLoad.End
+
+Program.Sub.AskSave.Start
+f.Intrinsic.Control.Try
+v.Local.iHold.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.If(v.Screen.F_Note!txtOriginalNote.Text.Trim,<>,v.Screen.F_Note!txtWONote.Text.Trim)
+	F.Intrinsic.UI.Msgbox("Do you want to save change?","Note Modification",4,V.Local.iHold)
+	F.Intrinsic.Control.If(V.Local.iHold,=,6)
+		f.Intrinsic.Control.CallSub("cmdSave_Click")
+	F.Intrinsic.Control.EndIf
+f.Intrinsic.Control.EndIf
+gui.F_Note..Visible(False)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.AskSave.End
+
+Program.Sub.cmdSave_Click.Start
+f.Intrinsic.Control.Try
+v.Local.iHold.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+v.Local.sError.Declare
+v.Local.sWO.Declare
+
+'Save Note to GAB_4169_WO_Notes
+f.ODBC.Connection!conx.OpenCompanyConnection(600)
+f.Intrinsic.UI.InvokeWaitDialog("Saving...")
+f.Intrinsic.String.Split(v.Screen.F_Note!lblWONote.Caption,"-",v.Local.sWO)
+f.Data.DataTable.SetValue("WO",v.Screen.F_Note!txtRowIndex.Text,"Note",v.Screen.F_Note!txtWONote.Text.Trim)	
+f.Intrinsic.String.Build("Select * from GAB_4169_WO_Notes where Job = '{0}' and Suffix = '{1}'",v.Local.sWO(0),v.Local.sWO(1),v.Local.sSQL)
+f.ODBC.Connection!conx.ExecuteAndReturn(v.Local.sSQL,v.Local.sRet)
+f.Intrinsic.Control.If(v.Local.sRet,=,"")	
+	f.Intrinsic.String.Build("Insert into Gab_4169_WO_Notes (Job,Suffix,Notes) values ('{0}','{1}','{2}')",v.Local.sWO(0),v.Local.sWO(1),v.Screen.F_Note!txtWONote.Text,v.Local.sSQL)
+f.Intrinsic.Control.Else	
+	f.Intrinsic.String.Build("Update GAB_4169_WO_Notes set Notes = '{0}' where Job = '{1}' and Suffix = '{2}'",v.Screen.F_Note!txtWONote.Text,v.Local.sWO(0),v.Local.sWO(1),v.Local.sSQL)
+f.Intrinsic.Control.EndIf
+f.ODBC.Connection!conx.Execute(v.Local.sSQL)
+f.ODBC.Connection!conx.Close
+gui.F_Note.txtOriginalNote.Text(v.Screen.F_Note!txtWONote.Text)
+f.Intrinsic.UI.CloseWaitDialog
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.Comments.Start
+${$0$}$$}$BAO$}$4/18/2018 3:48:04 PM$}$False
+${$3$}$0$}$$}$0$}$-1$}$$}$12:00:00 AM$}$
+'BN, Apr 18, 2018
+'This report will show all open/closed Work Orders within the Date Range Selected.
+'If there is a link from WO to SO, SO number will be populated.
+'In case SO is not populated, the Unit Price will be pulled from the most recent SO of that particular part.
+
+'The Following Formulas will be used:
+'Formula for Normal Min/PC (Hrs Req'd*60)/Qty Ordered
+'Avg $/DLH (Extended Amount/Hrs Req'd)
+'Actual Min/PC (Actual Hours*60/QTY Complete from closed orders)
+'Note field will be saved to GAB_4169_WO_Notes
+Program.Sub.Comments.End
